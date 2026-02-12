@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AotApiDemo/AotApiDemo.csproj" />
+  <Project Path="TodoList.Api/TodoList.Api.csproj" />
+</Solution>
