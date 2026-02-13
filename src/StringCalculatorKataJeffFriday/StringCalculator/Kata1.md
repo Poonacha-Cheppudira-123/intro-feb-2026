@@ -34,16 +34,16 @@ In this project there is a class called `Calculator` and it has a single public 
 
 The idea is that this method, when given a string, has some rules on how to convert that string into an integer.
 
-1. An empty string returns 0. (note, we already have a failing test for this, make it pass.) - DONE
-2. A string with a single integer in it is converted to an integer and returned. - DONE
+1. An empty string returns 0. (note, we already have a failing test for this, make it pass.)
+2. A string with a single integer in it is converted to an integer and returned.
 	- For example, if you call `Add("2")`, it returns `2`. 
 	- Write as many examples of passing integers (Theories?) until you are confident it handles this case correctly.
-3. It can take a string with two integers, separated by a comma. So `Add("1,2")` would produce 3. - DONE
-4. It can take an arbitrary length string, so: - DONE
+3. It can take a string with two integers, separated by a comma. So `Add("1,2")` would produce 3.
+4. It can take an arbitrary length string, so:
 	- `Add("1,2") => 3`
 	- `Add("1,2,3") => 6`
 	- `Add("1,2,3,4,5,6,7,8,9") => 45`
-5. We can "mix" delimeters. Where before you could only separate numbers with a comma, now you can use a newline. (in C#, a newline is represented with the `\n` escape sequence). - DONE
+5. We can "mix" delimeters. Where before you could only separate numbers with a comma, now you can use a newline. (in C#, a newline is represented with the `\n` escape sequence).
 	- `Add("1\n2") => 3`
 	- `Add("1\n2,3") => 6`
 6. Custom delimeters. Users can use any single letter delimeter they'd like, and they indicate it by passing an argument to add in the following form:

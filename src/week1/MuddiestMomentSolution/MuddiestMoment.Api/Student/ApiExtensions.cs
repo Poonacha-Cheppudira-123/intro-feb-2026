@@ -17,7 +17,7 @@ public static class ApiExtensions
             // if any http post methods come in for /student/moments run this function
             group.MapPost("", StudentAddsMoment.AddMoment);
             group.MapGet("", StudentGetsListOfSavedMoments.GetAllMomentsForStudent);
-            // DELETE /student/moments/tacos
+            // DELETE /student/moments/???
             group.MapDelete("/{id:guid}", StudentMarksMomentAnswered.MarkQuestionAnswered);
 
 

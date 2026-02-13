@@ -20,10 +20,13 @@ var mmApi = builder.AddProject<Projects.MuddiestMoment_Api>("mm-api")
     .WithReference(mmDb)
     .WaitFor(mmDb);
 
-scalar.WithApiReference(mmApi);
+scalar.WithApiReference(mmApi); // Make an api call to get this document and show a UI on it.
 
 var gateway = builder.AddProject<Projects.Gateway_Api>("gateway")
     .WithReference(mmApi)
     .WaitFor(mmApi);
 
+var instructorApi = builder.AddProject<Projects.Instructor_Api>("instructor-api");
+
+scalar.WithApiReference(instructorApi);
 builder.Build().Run();

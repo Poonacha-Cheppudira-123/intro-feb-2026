@@ -25,10 +25,15 @@ builder.Services.AddValidation(); // opting in to services to handle some stuff 
 var app = builder.Build();
 // everything here is setting up how we actually handle incoming request and write responses.
 
-app.MapOpenApi(); 
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi(); // while I'm doing development, I want to GET the document at /openapi/v1.json
+    // it will generate this when you ask for it. Slow. But "accurate", right?
+}
 // add the code I am about to write that allows us to handle POST to /student/m
 
 app.MapStudentEndpoints(); // More explicit - means more "intention revealing"
+
 
 app.MapDefaultEndpoints();
 
