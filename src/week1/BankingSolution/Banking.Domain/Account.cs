@@ -3,23 +3,25 @@
 
 namespace Banking.Domain;
 
-public class Account
+public class Account(ICalculateBonusesForAccounts _bonusCalculator)
 {
     private decimal _currentBalance = 5000M;
 
-    private ICalculateBonusesForAccounts _calculateBonusesForAccounts;
+    //private ICalculateBonusesForAccounts _calculateBonusesForAccounts;
 
-    public Account(ICalculateBonusesForAccounts calc)
-    {
-        _calculateBonusesForAccounts = calc;
-    }
+    //public Account(ICalculateBonusesForAccounts calc)
+    //{
+    //    _calculateBonusesForAccounts = calc;
+    //}
 
     public void Deposit(TransactionAmount amountToDeposit)
     {
         // if the amountToDeposit is 0 or less, throw an exception - abnormal end.
         //var bonusCalculator = new StandardBonusCalculator(); // this is a real, concrete thing. 
         // "new is glue"
-        _currentBalance += amountToDeposit + _calculateBonusesForAccounts.CalculateBonusForDeposit(_currentBalance, amountToDeposit);
+        // If, and only if the bonus calculator throws an exception - send a notifcation to some other service,
+        // add zero to the balance - and the notification 
+        _currentBalance += amountToDeposit + _bonusCalculator.CalculateBonusForDeposit(_currentBalance,amountToDeposit);
     }
 
     public decimal GetBalance()

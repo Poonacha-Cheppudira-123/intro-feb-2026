@@ -1,0 +1,159 @@
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { PageLayout } from '@ht/shared/ui-common/layouts/page';
+import { authStore } from '@ht/shared/util-auth/store';
+import { NgIcon } from '@ng-icons/core';
+
+@Component({
+  selector: 'app-profile-home',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [PageLayout, NgIcon],
+  template: `
+    <app-ui-page title="Profile">
+      <div
+        class="flex flex-col md:w-1/2 mx-auto  bg-base-100 p-8 rounded-md border-2 border-base-300"
+      >
+        <div class="flex flex-row gap-4 justify-items-end items-end ">
+          <div class="px-4 sm:px-0">
+            <h3 class="text-accent text-lg font-semibold">Your Information</h3>
+          </div>
+          <div class="px-4 sm:px-0">
+            <p class="mt-1 max-w-2xl  text-sm/6">Personal details and application.</p>
+          </div>
+        </div>
+        <div class="mt-6 border-t border-gray-100 dark:border-white/10">
+          <dl class="divide-y divide-gray-100 dark:divide-white/10">
+            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt class="text-sm/6 font-medium">Id</dt>
+              <dd class="mt-1 flex text-sm/6 sm:col-span-2 sm:mt-0">
+                <span class="grow text-current/70">{{ store.authResource.value()?.sub }}</span>
+                <span class="ml-4 shrink-0">
+                  <button
+                    type="button"
+                    class="btn btn-circle btn-ghost btn-sm font-medium text-current/20 cursor-not-allowed disabled text-lg"
+                  >
+                    <ng-icon
+                      name="lucidePencilOff"
+                      class="size-4 inline-block mr-1 text-current/20"
+                    ></ng-icon>
+                  </button>
+                </span>
+              </dd>
+            </div>
+            <div
+              class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
+              [class.opacity-50]="isEditing() && editingField() !== 'given_name'"
+              [class.opacity-100]="editingField() === 'given_name'"
+              [class.bg-base-100]="isEditing() && editingField() === 'given_name'"
+            >
+              <dt class="text-sm/6 font-medium">Given Name</dt>
+              <dd class="mt-1 flex text-sm/6 sm:col-span-2 sm:mt-0">
+                <span class="grow">{{ store.authResource.value()?.given_name }}</span>
+                <span class="ml-4 shrink-0">
+                  <button
+                    (click)="setEditing('given_name')"
+                    type="button"
+                    class="btn btn-circle btn-ghost btn-sm font-medium text-success/80 text-lg"
+                  >
+                    <ng-icon name="lucidePencilLine" class="inline-block"></ng-icon>
+                  </button>
+                </span>
+              </dd>
+            </div>
+            <div
+              class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
+              [class.opacity-50]="isEditing() && editingField() !== 'family_name'"
+            >
+              <dt class="text-sm/6 font-medium">Family Name</dt>
+              <dd
+                class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400"
+              >
+                <span class="grow">{{ store.authResource.value()?.family_name }}</span>
+                <span class="ml-4 shrink-0">
+                  <button
+                    (click)="setEditing('family_name')"
+                    type="button"
+                    class="btn btn-circle btn-ghost btn-sm font-medium text-success/80 text-lg"
+                  >
+                    <ng-icon name="lucidePencilLine" class="inline-block"></ng-icon>
+                  </button>
+                </span>
+              </dd>
+            </div>
+            <div
+              class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
+              class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
+              [class.opacity-50]="isEditing() && editingField() !== 'email'"
+            >
+              <dt class="text-sm/6 font-medium">Email Address</dt>
+              <dd
+                class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400"
+              >
+                <span class="grow">{{ store.authResource.value()?.email }}</span>
+                <span class="ml-4 shrink-0">
+                  <button
+                    (click)="setEditing('email')"
+                    type="button"
+                    class="btn btn-circle btn-ghost btn-sm font-medium text-success/80 text-lg"
+                  >
+                    <ng-icon name="lucidePencilLine" class="inline-block"></ng-icon>
+                  </button>
+                </span>
+              </dd>
+            </div>
+            <div
+              class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
+              [class.opacity-50]="isEditing() && editingField() !== 'preferred_username'"
+            >
+              <dt class="text-sm/6 font-medium">User Name</dt>
+              <dd
+                class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400"
+              >
+                <span class="grow">{{ store.authResource.value()?.preferred_username }}</span>
+                <span class="ml-4 shrink-0">
+                  <button
+                    (click)="setEditing('preferred_username')"
+                    type="button"
+                    class="btn btn-circle btn-ghost btn-sm font-medium text-success/80 text-lg"
+                  >
+                    <ng-icon name="lucidePencilLine" class="inline-block"></ng-icon>
+                  </button>
+                </span>
+              </dd>
+            </div>
+            <div
+              class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
+              [class.opacity-50]="isEditing()"
+            >
+              <dt class="text-sm/6 font-medium">Roles</dt>
+              <dd
+                class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400"
+              >
+                <span class="grow">{{ store.authResource.value()?.role?.join(', ') }}</span>
+                <span class="ml-4 shrink-0">
+                  <button type="button" class="rounded-md font-medium text-red-300 disabled">
+                    <ng-icon name="lucidePencilOff" class="size-4 inline-block mr-1"></ng-icon>
+                  </button>
+                </span>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </app-ui-page>
+  `,
+  styles: ``,
+})
+export class HomePage {
+  setEditing(field: string) {
+    if (this.isEditing() && this.editingField() === field) {
+      this.isEditing.set(false);
+      this.editingField.set(null);
+      return;
+    }
+    this.isEditing.set(true);
+    this.editingField.set(field);
+  }
+  store = inject(authStore);
+  editingField = signal<string | null>(null);
+  isEditing = signal(false);
+}

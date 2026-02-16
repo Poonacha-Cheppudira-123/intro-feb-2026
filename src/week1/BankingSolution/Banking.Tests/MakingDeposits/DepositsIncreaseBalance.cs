@@ -3,6 +3,7 @@
 
 
 using Banking.Domain;
+using Banking.Tests.TestDoubles;
 
 namespace Banking.Tests.MakingDeposits;
 
@@ -12,7 +13,7 @@ public class DepositsIncreaseBalance
     public void Depositing()
     {
         // Given I have a brand new account and I get the opening balance
-        var account = new Account();
+        var account = new Account(new DummyBonusCalculator());
        
 
         var openingBalance = account.GetBalance();

@@ -1,5 +1,6 @@
 ﻿
 using Banking.Domain;
+using Banking.Tests.TestDoubles;
 
 namespace Banking.Tests.MakingWithdrawals;
 
@@ -8,7 +9,7 @@ public class WithdrawDecreasesBalance
     [Fact]
     public void Example()
     {
-        var account = new Account();
+        var account = new Account(new DummyBonusCalculator());
 
 
         var openingBalance = account.GetBalance();
@@ -26,7 +27,7 @@ public class WithdrawDecreasesBalance
     public void CanWithdrawFullBalance()
     {
 
-        var account = new Account();
+        var account = new Account(new DummyBonusCalculator());
         account.Withdraw(account.GetBalance());
 
         Assert.Equal(0M, account.GetBalance());
@@ -35,7 +36,7 @@ public class WithdrawDecreasesBalance
     [Fact]
     public void OverdraftIsUnbound()
     {
-        var account = new Account();
+        var account = new Account(new DummyBonusCalculator());
 
 
         var openingBalance = account.GetBalance();
