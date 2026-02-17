@@ -1,6 +1,4 @@
-﻿
-// what 
-// "Interface Segregation Principle"
+﻿// "Interface Segregation Principle"
     // you define what you need, don't just use what's available.
     // Instead of creating one large "fat" interface with many methods, you should split it into 
     // smaller, focused interfaces, so that classes only implement what they need.
@@ -67,13 +65,31 @@ public class Calculator(ILogger _logger, INotifyTheHelpDesk _helpDesk)
 }
 
 
-// Test Double --> 4 different types:
-    // Dummy - not really part of the test, just need something so we don't get a NRE
+// Test Doubles: fake or stand-in objects used during unit tests when you don't want to use the real dependency
+// Avoid using real dependencies for the following reasons:
+     // 1). Slow (database, network)
+     // 2). Hard to trigger (rare errors)
+     // 3). Expensive (external APIs)
+     // 4). Unpredictable (current time, random numbers)
+     // 5). Dangerous (sending real emails)
 
-    // *Important ones
-    // Stub - a thing that has canned responses to questions. Simulating faults.
-        // Provides pre-defined answers to calls made during the test.
-        // Used to control inidrect inputs to the system under test.
+// 4 different types:
+    // * --> important ones which we are using in this project
+
+    // Dummy:
+        // You pass it only because the constructor requires it, but it is never called.
+        // Example below:
+        /*
+         * var logger = new DummyLogger();
+         * var service = new OrderService(logger);
+         */
+        // Real-life analogy: 
+            // Sign up for a form and put N/A in the Fax Number field because the system requires it, 
+            // even though nobody will fax you.
+            
+    // Stub:
+        // Return canned responses 
+
     // Mock - Record their interactions. 
         // Pre-programmed with expectations.
         // Test verifies behavior automatically: ensuring a specific method was called with certain arguments

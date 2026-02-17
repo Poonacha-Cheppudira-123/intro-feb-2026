@@ -58,7 +58,7 @@ public class CalculatorInteractionTests
         //stubbedLogger.When(logger => logger.LogAddResults(Arg.Any<string>()))
         //    .Throw(new Exception("Blammo~"));
 
-        // When
+        // When 
         var result = calculator.Add(example);
 
         // This test will only pass if
