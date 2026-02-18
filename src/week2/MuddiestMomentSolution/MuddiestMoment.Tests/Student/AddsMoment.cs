@@ -1,9 +1,8 @@
 ﻿using Alba;
+using Microsoft.Extensions.DependencyInjection;
 using MuddiestMoment.Api.Student.Endpoints;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static System.Net.WebRequestMethods;
+using NSubstitute;
+using Testcontainers.PostgreSql;
 
 namespace MuddiestMoment.Tests.students;
 
@@ -12,7 +11,23 @@ public class AddsMoment
     [Fact]
     public async Task CanAddAMoment()
     {
-        var host = await AlbaHost.For<Program>();
+        // starting up container which as our postgres db - notice the version
+        var postgreSqlContainer = new PostgreSqlBuilder("postgres:17.5").Build();
+        await postgreSqlContainer.StartAsync();
+
+        var stubbedUserProvider = Substitute.For<IProvideUserInformation>();
+        stubbedUserProvider.GetUserId().Returns("TEST-USER");
+        // Start up my API
+        var host = await AlbaHost.For<Program>(config =>
+        {
+            // Example 1 of "gray box testing"
+            config.UseSetting("ConnectionStrings:db-mm", postgreSqlContainer.GetConnectionString());
+            config.ConfigureServices(sp =>
+            {
+                // sp.AddScoped<IProvideUserInformation>((_) => stubbedUserProvider);
+                sp.AddScoped<IProvideUserInformation>((_) => stubbedUserProvider);
+            });
+        });
 
         // Scenario
         // Start up the API

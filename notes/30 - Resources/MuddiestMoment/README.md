@@ -1,2 +1,0 @@
-# "Muddiest Moment" Application
-

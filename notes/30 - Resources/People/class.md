@@ -1,2 +1,0 @@
-# Folks in the Class
-
