@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "gentypes": "openapi-ts"
   },
   "prettier": {
     "printWidth": 100,
@@ -37,11 +38,17 @@
     "@angular/build": "^21.1.4",
     "@angular/cli": "^21.1.4",
     "@angular/compiler-cli": "^21.1.0",
+    "@hey-api/openapi-ts": "^0.92.4",
     "@tailwindcss/postcss": "^4.1.12",
     "daisyui": "^5.5.18",
-    "nsw": "^0.1.0",
+    "msw": "^2.12.10",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.12",
     "typescript": "~5.9.2"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

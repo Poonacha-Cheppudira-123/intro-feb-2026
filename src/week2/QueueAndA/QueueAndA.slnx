@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AppHost/AppHost.csproj" />
+  <Project Path="BackendForFrontend/BackendForFrontend.csproj" />
+  <Project Path="Qa.Api/Qa.Api.csproj" />
+  <Project Path="ServiceDefaults/ServiceDefaults.csproj" />
+</Solution>

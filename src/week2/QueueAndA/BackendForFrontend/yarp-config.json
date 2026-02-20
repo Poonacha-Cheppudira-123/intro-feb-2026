@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/yarp/refs/heads/main/src/ReverseProxy/ConfigurationSchema.json",
+  "ReverseProxy": {
+    "Routes": {
+      "qaRoute": {
+        "ClusterId": "qaCluster",
+        "Match": {
+          "Path": "/api/{**catch-all}"
+        },
+        "Transforms": [
+          {
+            "PathRemovePrefix": "/api"
+          }
+        ]
+      },
+      "frontendDevRoute": {
+        "ClusterId": "frontend-dev",
+        "Match": {
+          "Path": "/{**catch-all}"
+        }
+
+      }
+    },
+    "Clusters": {
+      "qaCluster": {
+        "Destinations": {
+          "softwareDestination": {
+            "Address": "https://qa-api/"
+          }
+        }
+      },
+      "frontend-dev": {
+        "Destinations": {
+          "frontend-dev-destination": {
+            "Address": "http://localhost:4200/"
+          }
+        }
+      }
+    }
+  }
+}

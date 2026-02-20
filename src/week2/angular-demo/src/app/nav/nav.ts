@@ -58,6 +58,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Nav {
   links = signal([
+    { name: 'Questions', path: '/questions' },
     { name: 'About', path: '/about' },
     { name: 'Profile', path: '/profile' },
     { name: 'Basics', path: '/basics' },

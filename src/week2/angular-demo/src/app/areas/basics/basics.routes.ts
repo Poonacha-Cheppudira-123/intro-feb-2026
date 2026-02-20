@@ -3,12 +3,13 @@ import { Home } from './home';
 import { HomePage } from './pages/home';
 import { SignalsPage } from './pages/signals';
 import { CounterStore } from './counter-store';
+import { ResourceDemo } from './pages/resource-demo';
 
 export const BasicsRoutes: Routes = [
   {
     path: '',
     component: Home,
-    // Same as builder.services.addservice
+    // builder.services.addscoped
     providers: [CounterStore],
     children: [
       {
@@ -18,6 +19,10 @@ export const BasicsRoutes: Routes = [
       {
         path: 'signals',
         component: SignalsPage,
+      },
+      {
+        path: 'resources',
+        component: ResourceDemo,
       },
       {
         path: '**',
